@@ -86,6 +86,7 @@ footer{text-align:center;padding:22px;color:#c5d5f4;font-size:.85rem}
 <button onclick="testVoice()">🎙 Probar voz</button>
 <button class="dark" onclick="window.print()">Imprimir / PDF</button>
 </div>
+
 <section id="map-r" class="active">
 <p class="intro">El recorrido ilumina las conexiones entre el tema central y las ramas. También puedes seleccionar cualquier nodo para explorarlo libremente.</p>
 <div class="presentation">
@@ -104,6 +105,7 @@ footer{text-align:center;padding:22px;color:#c5d5f4;font-size:.85rem}
 </aside>
 </div>
 </section>
+
 <section id="map-m">
 <p class="intro">Explora la coherencia del proyecto desde su problemática hasta sus conclusiones. El recorrido automático destaca cada componente en secuencia.</p>
 <div class="presentation">
@@ -127,4 +129,196 @@ footer{text-align:center;padding:22px;color:#c5d5f4;font-size:.85rem}
 <div class="stepdetail" id="stepdetail">Durante el recorrido automático se destacará cada estadio.</div>
 </div>
 </section>
-<footer>Grupo 12 · Organizadores gráficos del proyecto de investigación</footer>
+</main>
+<footer>Presentación académica interactiva · Grupo 12</footer>
+
+<script>
+const ref=[
+["Teorías y estrategias","TPR · aprendizaje multisensorial","<ul><li>Respuesta Física Total (TPR) como metodología de enseñanza.</li><li>Estrategias pedagógicas adaptadas a las necesidades de aprendizaje.</li><li>Actividades prácticas y movimiento.</li><li>Repetición de instrucciones y apoyos visuales y gestuales.</li></ul>"],
+["Conceptos","Comprensión auditiva · colores","<ul><li>Aprendizaje del inglés como lengua extranjera.</li><li>Comprensión auditiva e instrucciones orales.</li><li>Vocabulario de colores, discriminación y reconocimiento de vocablos.</li><li>Asociación entre palabras escuchadas y referentes; ejecución de instrucciones.</li><li>Autonomía, apoyos requeridos y respuestas verbales y no verbales.</li></ul>"],
+["Investigaciones","Antecedentes citados","<p><b>Tema:</b> Takriyanti et al. (2022); Wiranto (2024); Yoshida y Aoyama (2024); Nemes (2024).</p><p><b>Evento:</b> Yoshida y Aoyama (2024); Wiranto (2024); González-Reyes et al. (2021); Kang y Scott (2021); Nemes (2024); Takriyanti et al. (2022).</p><p><b>Unidad:</b> Nemes (2024); Andreou y Argatzopoulou (2025); Kang y Scott (2021); Urbann et al. (2024).</p><p><b>Contexto:</b> Takriyanti et al. (2022); Bashiru y Smith (2023); Adnyani et al. (2024); Nemes (2024).</p>"],
+["Marco normativo","Convención · leyes","<ul><li>Convención sobre los Derechos de las Personas con Discapacidad (ONU, 2006).</li><li>Ley 1346 de 2009.</li><li>Ley 1618 de 2013.</li><li>Decreto 1421 de 2017, como referente de educación inclusiva dentro de su ámbito de aplicación.</li></ul>"],
+["Unidad de estudio","12 adultos · 18 a 65 años","<p>12 personas adultas con discapacidad múltiple, entre los 18 y los 65 años. Se consideran necesidades de apoyo, autonomía, participación y características individuales de aprendizaje.</p>"],
+["Contexto","Dirección de Población · Girón","<p>Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander. Se consideran condiciones de aprendizaje, recursos pedagógicos, accesibilidad, apoyos y participación.</p>"],
+["Datos estadísticos","Información disponible","<ul><li>12 participantes, entre 18 y 65 años.</li><li>No se dispone de datos estadísticos previos específicos sobre comprensión de instrucciones orales en inglés con vocabulario de colores en personas adultas con discapacidad múltiple.</li><li>No se cuenta con caracterización estadística institucional adicional.</li></ul>"],
+["Jerarquía","Tema · evento · unidad · contexto","<ul><li><b>Tema:</b> aprendizaje del inglés en personas con discapacidad múltiple.</li><li><b>Evento 1:</b> comprensión de instrucciones orales en inglés con vocabulario de colores.</li><li><b>Unidad:</b> 12 personas adultas con discapacidad múltiple, entre 18 y 65 años.</li><li><b>Contexto:</b> Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander.</li><li><b>Evento 2:</b> No aplica.</li></ul>"]
+];
+
+const met=[
+["Problemática","Situación identificada","<p>Durante las actividades de aprendizaje del inglés en la Dirección de Población con Discapacidad de la Alcaldía de Girón, algunos participantes requerían repetición, apoyo o explicación adicional para comprender y responder a instrucciones orales relacionadas con los colores.</p><p>Se requiere describir esta comprensión considerando las características de los participantes y las condiciones de las actividades.</p>"],
+["Pregunta","Pregunta de investigación","<p>¿Qué particularidades definen la comprensión de instrucciones orales en inglés con vocabulario de colores en 12 personas adultas de 18 a 65 años con discapacidad múltiple, vinculadas a la Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander, durante las ocho semanas comprendidas entre el 19 de septiembre y el 7 de noviembre de 2024?</p>"],
+["Objetivo general","Propósito del estudio","<p>Describir las particularidades de la comprensión de instrucciones orales en inglés con vocabulario de colores en 12 personas adultas de 18 a 65 años con discapacidad múltiple, vinculadas a la Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander, durante las ocho semanas comprendidas entre el 19 de septiembre y el 7 de noviembre de 2024.</p>"],
+["Cuatro objetivos","Objetivos y correspondencia metodológica","<p><b>OE1.</b> Identificar cómo discriminan los participantes los vocablos de colores mencionados en instrucciones orales en inglés. <b>Categoría:</b> discriminación de vocablos de colores. <b>Técnica:</b> observación estructurada. <b>Instrumentos:</b> rúbrica pictográfica y formato de observación. <b>Fuente:</b> 12 participantes. <b>Análisis:</b> codificación y análisis descriptivo.</p><hr><p><b>OE2.</b> Describir ejecución de instrucciones y autonomía, considerando apoyos requeridos. <b>Categoría:</b> ejecución y autonomía. <b>Técnica:</b> observación estructurada. <b>Instrumentos:</b> rúbrica pictográfica, notas de campo y registros audiovisuales. <b>Fuente:</b> 12 participantes. <b>Análisis:</b> categorización según ejecución, autonomía y apoyos.</p><hr><p><b>OE3.</b> Analizar variaciones de comprensión y ejecución según complejidad. <b>Categoría:</b> comprensión y ejecución según complejidad. <b>Técnicas:</b> observación y revisión de registros. <b>Instrumentos:</b> formato de observación, notas de campo y grabaciones de audio y video. <b>Fuente:</b> registros de sesiones y participantes. <b>Análisis:</b> codificación, comparación constante y análisis temático.</p><hr><p><b>OE4.</b> Caracterizar las condiciones de las actividades de aprendizaje. <b>Categoría:</b> condiciones de las actividades. <b>Técnicas:</b> observación y registro de campo. <b>Instrumentos:</b> notas de campo y formato de observación. <b>Fuente:</b> contexto institucional y registros de sesiones. <b>Análisis:</b> categorización y análisis descriptivo.</p>"],
+["Tipo, población y muestra","Clasificación y participantes","<ul><li><b>Tipo de investigación:</b> descriptiva.</li><li><b>Población:</b> 12 personas adultas, de 18 a 65 años, con discapacidad múltiple, vinculadas a la Dirección de Población con Discapacidad de la Alcaldía de Girón.</li><li><b>Muestra:</b> 12 participantes seleccionados mediante muestreo intencional.</li></ul>"],
+["Diseño","Campo · univariable · descriptivo · longitudinal","<ul><li><b>Ambiente natural:</b> investigación de campo.</li><li><b>Amplitud de foco:</b> univariable; comprensión de instrucciones orales en inglés con vocabulario de colores. Dimensiones: discriminación, ejecución, autonomía, apoyos y complejidad.</li><li><b>Nivel de intervención:</b> descriptivo.</li><li><b>Secuencia de mediciones:</b> longitudinal durante ocho semanas, del 19 de septiembre al 7 de noviembre de 2024.</li></ul>"],
+["Antecedentes y evento","Fundamentación del evento","<p><b>Antecedentes:</b> Sari et al. (2021); Kang y Scott (2021); González-Reyes et al. (2021); Wiranto (2024); Nemes (2024); Yoshida y Aoyama (2024).</p><p><b>Evento único:</b> comprensión de instrucciones orales en inglés con vocabulario de colores. Discriminación, ejecución, autonomía, apoyos y complejidad son dimensiones de análisis, no eventos independientes.</p>"],
+["Resultados y conclusiones","Hallazgos principales","<ul><li><b>OE1:</b> siete de doce participantes mostraron avances observables en reconocimiento de colores; cinco presentaron respuestas limitadas o poco consistentes.</li><li><b>OE2:</b> algunos ejecutaron instrucciones con mayor autonomía; otros necesitaron repetición, orientación visual, modelado físico y asistencia continua.</li><li><b>OE3:</b> repetición, gestos y apoyos visuales facilitaron comprensión y ejecución; hubo variaciones individuales.</li><li><b>OE4:</b> actividades presenciales, tarjetas de colores, apoyos visuales, repetición y movimiento favorecieron participación y comprensión oral.</li><li><b>Conclusión general:</b> distintos niveles de reconocimiento, comprensión y ejecución; autonomía y apoyos variaron según condiciones individuales.</li></ul>"],
+["Limitaciones y recomendaciones","Proyecciones","<p><b>Limitaciones:</b> diversidad de condiciones motoras, cognitivas y comunicativas; apoyos permanentes para algunos participantes; espacio y recursos condicionaron actividades; asistencia y participación variables; contexto específico y grupo reducido limitan transferencia.</p><p><b>Recomendaciones:</b> integrar instrucciones auditivas, apoyos visuales, repetición y movimiento; adaptar actividades y materiales a condiciones individuales; incorporar tarjetas pictográficas; fortalecer formación docente en metodologías inclusivas y TPR; promover futuras investigaciones con periodos más amplios y grupos diversos.</p>"]
+];
+
+const stages=[
+["Estadio 1 · Diagnóstico","Identificación de las dificultades iniciales en la comprensión de instrucciones orales en inglés y reconocimiento del vocabulario de los colores."],
+["Estadio 2 · Implementación","Desarrollo de actividades de aprendizaje con instrucciones orales relacionadas con los colores y aplicación de instrumentos de observación y registro."],
+["Estadio 3 · Analítico","Organización y clasificación de la información obtenida, identificando patrones, diferencias y respuestas de los participantes."],
+["Estadio 4 · Interpretativo y de validación","Interpretación de resultados mediante comparación de observaciones, notas de campo, rúbricas pictográficas y registros audiovisuales."],
+["Estadio 5 · Socialización","Presentación de resultados y formulación de conclusiones y recomendaciones pedagógicas."]
+];
+
+const palettes=["#23658b","#1b9a91","#d49a2a","#8b72bd","#b85c73","#527d91","#718b49","#68788c"];
+let current='r',timer=null,index=-1,voice=true;
+const initialized={r:false,m:false};
+
+function setup(key,data){
+  if(initialized[key]) return;
+  const stage=document.getElementById("stage-"+key);
+  const nodebox=document.getElementById("nodes-"+key);
+  const svg=document.getElementById("wires-"+key);
+  const w=stage.clientWidth || 900;
+  const h=stage.clientHeight || 620;
+  const cx=w/2,cy=h/2,rx=Math.min(w*.39,290),ry=Math.min(h*.39,245);
+  svg.setAttribute("viewBox",`0 0 ${w} ${h}`);
+
+  data.forEach((d,i)=>{
+    const a=(-90+i*360/data.length)*Math.PI/180;
+    const x=cx+rx*Math.cos(a),y=cy+ry*Math.sin(a);
+    const line=document.createElementNS("http://www.w3.org/2000/svg","line");
+    line.setAttribute("x1",cx);
+    line.setAttribute("y1",cy);
+    line.setAttribute("x2",x);
+    line.setAttribute("y2",y);
+    line.id=`wire-${key}-${i}`;
+    svg.append(line);
+
+    const b=document.createElement("button");
+    b.type="button";
+    b.className="node";
+    b.style.left=(x/w*100)+"%";
+    b.style.top=(y/h*100)+"%";
+    b.style.setProperty("--c",palettes[i%palettes.length]);
+    b.innerHTML=`<strong>${d[0]}</strong><small>${d[1]}</small>`;
+    b.onclick=()=>{stopTour();current=key;showNode(key,i)};
+    b.id=`node-${key}-${i}`;
+    nodebox.append(b);
+  });
+  initialized[key]=true;
+}
+
+function showNode(key,i){
+  let data=key==='r'?ref:met;
+  document.querySelectorAll(`#nodes-${key} .node`).forEach((n,j)=>{
+    n.classList.toggle("active",j===i);
+    if(j===i)n.classList.add("visited");
+  });
+  document.querySelectorAll(`#wires-${key} line`).forEach((l,j)=>l.classList.toggle("lit",j===i));
+  let d=data[i];
+  document.getElementById("info-"+key).innerHTML=`<div class="eyebrow">${key==='r'?'Marco referencial · Tabla 1':'Marco metodológico · Tabla 3'}</div><h3>${d[0]}</h3><p class="hint">${d[1]}</p>${d[2]}<div class="progress"><span style="width:${(i+1)/data.length*100}%"></span></div><div class="counter">Apartado ${i+1} de ${data.length}</div>`;
+  document.getElementById("count-"+key).textContent=`Apartado ${i+1} de ${data.length}`;
+  document.getElementById("prog-"+key).style.width=((i+1)/data.length*100)+"%";
+  if(voice)say(d[0]+". "+d[1]);
+}
+
+let availableVoices=[];
+function loadVoices(){
+  if(!("speechSynthesis" in window)) return [];
+  availableVoices=window.speechSynthesis.getVoices()||[];
+  return availableVoices;
+}
+if("speechSynthesis" in window){
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged=loadVoices;
+}
+function chooseSpanishVoice(){
+  loadVoices();
+  return availableVoices.find(v=>/^es-CO$/i.test(v.lang))
+    || availableVoices.find(v=>/^es[-_]/i.test(v.lang))
+    || null;
+}
+function say(t){
+  if(!voice)return;
+  if(!("speechSynthesis" in window)){
+    const count=document.getElementById("count-"+current);
+    if(count)count.textContent="Este navegador no ofrece voz sintetizada.";
+    return;
+  }
+  const synth=window.speechSynthesis;
+  synth.cancel();
+  const clean=String(t).replace(/<[^>]*>/g," ").replace(/\s+/g," ").trim();
+  const u=new SpeechSynthesisUtterance(clean);
+  u.lang="es-CO";
+  u.rate=.9;
+  u.pitch=1;
+  const selected=chooseSpanishVoice();
+  if(selected)u.voice=selected;
+  u.onerror=()=>{
+    const count=document.getElementById("count-"+current);
+    if(count)count.textContent="No se pudo reproducir la voz. Pulsa «Probar voz» o revisa el audio del dispositivo.";
+  };
+  try{synth.speak(u)}catch(e){
+    const count=document.getElementById("count-"+current);
+    if(count)count.textContent="Chrome no pudo iniciar la voz. Revisa el audio y vuelve a pulsar «Probar voz».";
+  }
+}
+
+function testVoice(){
+  voice=true;
+  document.getElementById("voiceBtn").textContent="🔊 Voz activada";
+  say("Hola. La narración de los organizadores gráficos está funcionando.");
+}
+
+function changeMap(k){
+  stopTour();
+  current=k;
+  document.getElementById("map-r").classList.toggle("active",k==='r');
+  document.getElementById("map-m").classList.toggle("active",k==='m');
+  document.getElementById("tab-r").setAttribute("aria-selected",k==='r');
+  document.getElementById("tab-m").setAttribute("aria-selected",k==='m');
+  setup(k,k==='r'?ref:met);
+}
+
+function activeData(){return current==='r'?ref:met}
+function startTour(){stopTour();index=-1;nextStep()}
+function nextStep(){
+  let data=activeData();
+  index++;
+  if(index>=data.length){stopTour();return}
+  showNode(current,index);
+  timer=setTimeout(nextStep,voice?8500:4800);
+}
+function pauseTour(){
+  if(timer){clearTimeout(timer);timer=null}
+  if("speechSynthesis" in window)window.speechSynthesis.pause();
+}
+function resumeTour(){
+  if("speechSynthesis" in window)window.speechSynthesis.resume();
+  if(timer===null)nextStep();
+}
+function stopTour(){
+  if(timer)clearTimeout(timer);
+  timer=null;
+  if("speechSynthesis" in window)window.speechSynthesis.cancel();
+}
+function restartTour(){startTour()}
+function toggleVoice(){
+  voice=!voice;
+  document.getElementById("voiceBtn").textContent=voice?"🔊 Voz activada":"🔇 Voz desactivada";
+}
+
+stages.forEach((s,i)=>{
+  let b=document.createElement("button");
+  b.textContent="Estadio "+(i+1);
+  b.onclick=()=>{
+    stopTour();
+    document.querySelectorAll("#steps button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    document.getElementById("stepdetail").innerHTML=`<b>${s[0]}</b><br>${s[1]}`;
+    if(voice)say(s[0]+". "+s[1]);
+  };
+  document.getElementById("steps").append(b);
+});
+
+setup('r',ref);
+document.getElementById("tab-r").addEventListener("click",()=>changeMap("r"));
+document.getElementById("tab-m").addEventListener("click",()=>changeMap("m"));
+</script>
+</body>
+</html>
