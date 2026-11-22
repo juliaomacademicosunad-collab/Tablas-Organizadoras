@@ -1,386 +1,326 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Organizadores Gráficos - Grupo 12</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapas mentales - Grupo 12</title>
 <style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f2f5fa;
-  color: #243247;
-  line-height: 1.5;
-}
-header {
-  background: #17365d;
-  color: white;
-  text-align: center;
-  padding: 30px 18px;
-}
-header h1 { margin: 0 0 8px; }
-header p { margin: 5px 0; }
-main {
-  max-width: 1100px;
-  margin: 25px auto;
-  padding: 0 16px;
-}
-.organizer {
-  background: white;
-  border-radius: 14px;
-  padding: 24px;
-  margin-bottom: 28px;
-  box-shadow: 0 3px 12px #00000012;
-}
-h2 {
-  color: #17365d;
-  border-bottom: 3px solid #d6a84b;
-  padding-bottom: 10px;
-}
-h3 { color: #24527a; margin-top: 0; }
-.central {
-  background: #17365d;
-  color: white;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.15rem;
-  margin: 18px 0;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 14px;
-}
-.node {
-  border: 1px solid #d7e0eb;
-  border-left: 5px solid #d6a84b;
-  border-radius: 10px;
-  padding: 16px;
-  background: #fbfcfe;
-}
-.node p { margin-bottom: 0; }
-.node ul { padding-left: 20px; }
-.question {
-  background: #eaf1f8;
-  padding: 18px;
-  border-radius: 10px;
-  margin: 16px 0;
-}
-button {
-  background: #176b58;
-  color: white;
-  border: 0;
-  padding: 12px 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 15px;
-  margin: 5px 5px 12px 0;
-}
-button:hover { background: #10513f; }
-.controls {
-  text-align: center;
-  margin: 18px 0;
-}
-.note {
-  background: #fff8e8;
-  border-left: 5px solid #d6a84b;
-  padding: 12px;
-  border-radius: 6px;
-}
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #607086;
-}
-@media print {
-  body { background: white; }
-  header { background: white; color: #17365d; }
-  button, .controls { display: none !important; }
-  .organizer { box-shadow: none; page-break-after: always; }
-}
+*{box-sizing:border-box}
+body{margin:0;background:#f2f5fa;color:#243247;font-family:Arial,sans-serif}
+header{background:#17365d;color:white;text-align:center;padding:25px 15px}
+header h1{margin:0 0 10px}
+main{max-width:1200px;margin:auto;padding:18px}
+.controls{text-align:center;margin:18px 0}
+button{border:0;border-radius:8px;padding:12px 16px;margin:4px;background:#176b58;color:white;font-size:15px;cursor:pointer}
+button:hover{background:#104d40}
+.map{background:white;padding:22px;border-radius:15px;margin:25px 0;box-shadow:0 3px 12px #0001}
+h2{color:#17365d;text-align:center}
+.center{background:#17365d;color:white;border-radius:50%;width:min(310px,85vw);min-height:190px;margin:25px auto;padding:35px 25px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:bold;font-size:19px;border:7px solid #d6a84b;box-shadow:0 0 0 8px #eaf0f7}
+.branches{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:30px}
+.branch{border-radius:14px;padding:17px;border:2px solid #d9e2ee;position:relative;background:#fbfcff}
+.branch:before{content:"";position:absolute;width:3px;height:24px;background:#aabbd0;top:-25px;left:50%}
+.branch h3{margin:0 0 10px;color:#17365d;font-size:17px}
+.branch p{margin:7px 0;font-size:14px}
+.branch ul{padding-left:19px;margin:7px 0}
+.branch li{margin:5px 0;font-size:14px}
+.sub{background:#edf3fa;border-radius:9px;padding:10px;margin-top:10px}
+.gold{border-color:#d6a84b}
+.teal{border-color:#399b8a}
+.purple{border-color:#8a78b8}
+.blue{border-color:#5b8fbd}
+.orange{border-color:#d99550}
+.green{border-color:#64a17b}
+.pink{border-color:#c47c9c}
+.question{background:#edf3fa;padding:16px;border-radius:12px;margin:18px 0}
+.timeline{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.stage{background:#eaf1f8;border-top:5px solid #d6a84b;border-radius:9px;padding:12px;font-size:13px}
+.stage b{display:block;color:#17365d;margin-bottom:6px}
+.small{font-size:13px;color:#596b80}
+footer{text-align:center;padding:20px;color:#68788b}
+@media(max-width:800px){.branches{grid-template-columns:repeat(2,minmax(0,1fr))}.timeline{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.branches{grid-template-columns:1fr}.timeline{grid-template-columns:1fr}.map{padding:13px}}
+@media print{body{background:white}.controls{display:none}.map{box-shadow:none;page-break-after:always}.branch:before{display:none}}
 </style>
 </head>
-
 <body>
-
 <header>
-  <h1>Organizadores Gráficos</h1>
-  <p>Proyecto de investigación – Grupo 12</p>
-  <p>Comprensión de instrucciones orales en inglés con vocabulario de colores en personas adultas con discapacidad múltiple</p>
+<h1>Mapas mentales de investigación</h1>
+<p>Proyecto académico – Grupo 12</p>
+<p>Comprensión de instrucciones orales en inglés con vocabulario de colores en personas adultas con discapacidad múltiple</p>
 </header>
 
 <main>
-
 <div class="controls">
-  <button onclick="leerPagina()">▶ Escuchar organizador</button>
-  <button onclick="speechSynthesis.pause()">⏸ Pausar</button>
-  <button onclick="speechSynthesis.resume()">▶ Continuar</button>
-  <button onclick="speechSynthesis.cancel()">⏹ Detener</button>
-  <button onclick="window.print()">Imprimir / Guardar PDF</button>
+<button onclick="leer(1)">▶ Escuchar mapa 1</button>
+<button onclick="leer(2)">▶ Escuchar mapa 2</button>
+<button onclick="speechSynthesis.pause()">⏸ Pausar</button>
+<button onclick="speechSynthesis.resume()">▶ Continuar</button>
+<button onclick="speechSynthesis.cancel()">⏹ Detener</button>
+<button onclick="window.print()">Imprimir / Guardar PDF</button>
 </div>
 
-<section class="organizer" id="tabla1">
-<h2>Organizador gráfico 1. Tabla 1 – Marco referencial</h2>
+<section class="map" id="mapa1">
+<h2>Mapa mental 1 · Marco referencial</h2>
+<div class="center">COMPRENSIÓN DE INSTRUCCIONES ORALES EN INGLÉS CON VOCABULARIO DE COLORES</div>
 
-<div class="central">
-  Comprensión de instrucciones orales en inglés con vocabulario de colores en personas adultas con discapacidad múltiple
+<div class="branches">
+<div class="branch gold">
+<h3>1. Tema de investigación</h3>
+<p>Aprendizaje del inglés en personas con discapacidad múltiple.</p>
+<div class="sub"><b>Evento central</b><p>Comprensión de instrucciones orales en inglés con vocabulario de colores.</p></div>
 </div>
 
-<div class="grid">
-
-<div class="node">
-<h3>1. Fundamentos teóricos</h3>
+<div class="branch teal">
+<h3>2. Teorías y estrategias</h3>
 <ul>
 <li>Respuesta Física Total (TPR).</li>
 <li>Aprendizaje multisensorial.</li>
 <li>Estrategias pedagógicas adaptadas.</li>
 <li>Repetición de instrucciones.</li>
-<li>Apoyos visuales, gestuales y actividades de movimiento.</li>
+<li>Apoyos visuales y gestuales.</li>
+<li>Actividades de movimiento.</li>
+<li>Actividades prácticas.</li>
 </ul>
 </div>
 
-<div class="node">
-<h3>2. Conceptos principales</h3>
+<div class="branch purple">
+<h3>3. Definiciones y conceptos</h3>
 <ul>
-<li>Aprendizaje del inglés como lengua extranjera.</li>
-<li>Comprensión de instrucciones orales.</li>
+<li>Inglés como lengua extranjera.</li>
+<li>Comprensión auditiva.</li>
+<li>Instrucciones orales.</li>
 <li>Vocabulario de colores.</li>
-<li>Discapacidad múltiple.</li>
-<li>Discriminación y reconocimiento de palabras.</li>
+<li>Discriminación y reconocimiento de vocablos.</li>
 <li>Asociación entre palabras escuchadas y referentes.</li>
-<li>Ejecución de instrucciones y autonomía.</li>
+<li>Ejecución, autonomía y apoyos requeridos.</li>
+<li>Respuestas verbales y no verbales.</li>
 </ul>
 </div>
 
-<div class="node">
-<h3>3. Antecedentes investigativos</h3>
-<p><b>Referencias relacionadas con el tema:</b></p>
-<p>Takriyanti et al. (2022); Wiranto (2024); Yoshida y Aoyama (2024); Nemes (2024).</p>
-<p><b>Estudios relacionados con el evento:</b></p>
-<p>Yoshida y Aoyama (2024); Wiranto (2024); González-Reyes et al. (2021); Kang y Scott (2021); Nemes (2024); Takriyanti et al. (2022).</p>
-<p><b>Unidad y contexto:</b></p>
-<p>Andreou y Argatzopoulou (2025); Urbann et al. (2024); Bashiru y Smith (2023); Adnyani et al. (2024).</p>
+<div class="branch blue">
+<h3>4. Investigaciones y antecedentes</h3>
+<ul>
+<li>Takriyanti et al. (2022).</li>
+<li>Wiranto (2024).</li>
+<li>Yoshida y Aoyama (2024).</li>
+<li>Nemes (2024).</li>
+<li>González-Reyes et al. (2021).</li>
+<li>Kang y Scott (2021).</li>
+<li>Andreou y Argatzopoulou (2025).</li>
+<li>Urbann et al. (2024).</li>
+<li>Bashiru y Smith (2023).</li>
+<li>Adnyani et al. (2024).</li>
+<li>Sari et al. (2021).</li>
+</ul>
 </div>
 
-<div class="node">
-<h3>4. Marco normativo</h3>
+<div class="branch orange">
+<h3>5. Marco normativo</h3>
 <ul>
 <li>Convención sobre los Derechos de las Personas con Discapacidad (ONU, 2006).</li>
 <li>Ley 1346 de 2009.</li>
 <li>Ley 1618 de 2013.</li>
-<li>Decreto 1421 de 2017, como referente de educación inclusiva en su ámbito de aplicación.</li>
+<li>Decreto 1421 de 2017, como referente de educación inclusiva dentro de su ámbito de aplicación.</li>
 </ul>
 </div>
 
-<div class="node">
-<h3>5. Datos y población</h3>
+<div class="branch green">
+<h3>6. Unidad de estudio</h3>
+<p><b>12 personas adultas</b></p>
 <ul>
-<li>12 personas adultas.</li>
 <li>Edades entre 18 y 65 años.</li>
-<li>Personas con discapacidad múltiple.</li>
-<li>No se identificaron datos estadísticos específicos previos sobre la comprensión de instrucciones orales en inglés con vocabulario de colores.</li>
+<li>Discapacidad múltiple.</li>
+<li>Participantes de la investigación.</li>
 </ul>
 </div>
 
-<div class="node">
-<h3>6. Contexto institucional</h3>
+<div class="branch pink">
+<h3>7. Contexto institucional</h3>
 <p>Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander.</p>
-<p>No se dispone de una caracterización estadística institucional adicional en la matriz.</p>
+<p class="small">No se cuenta con caracterización estadística institucional adicional.</p>
 </div>
 
+<div class="branch gold">
+<h3>8. Datos estadísticos</h3>
+<ul>
+<li>12 participantes adultos.</li>
+<li>Rango de edad: 18 a 65 años.</li>
+<li>No se dispone de datos estadísticos previos específicos sobre la comprensión de instrucciones orales en inglés con vocabulario de colores en esta población.</li>
+</ul>
 </div>
 
-<div class="question">
-<h3>Jerarquización del objeto de estudio</h3>
-<p><b>Tema:</b> aprendizaje del inglés en personas con discapacidad múltiple.</p>
-<p><b>Evento central:</b> comprensión de instrucciones orales en inglés con vocabulario de colores.</p>
-<p><b>Unidad de estudio:</b> 12 personas adultas de 18 a 65 años.</p>
-<p><b>Contexto:</b> Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander.</p>
+<div class="branch teal">
+<h3>9. Jerarquía del estudio</h3>
+<div class="sub"><b>Tema</b><p>Aprendizaje del inglés en personas con discapacidad múltiple.</p></div>
+<div class="sub"><b>Evento 1</b><p>Comprensión de instrucciones orales en inglés con vocabulario de colores.</p></div>
+<div class="sub"><b>Unidad</b><p>12 personas adultas con discapacidad múltiple, de 18 a 65 años.</p></div>
+<div class="sub"><b>Contexto</b><p>Dirección de Población con Discapacidad de Girón, Santander.</p></div>
+<p><b>Evento 2:</b> No aplica.</p>
+</div>
 </div>
 </section>
 
-<section class="organizer" id="tabla3">
-<h2>Organizador gráfico 2. Tabla 3 – Marco metodológico</h2>
+<section class="map" id="mapa2">
+<h2>Mapa mental 2 · Marco metodológico</h2>
+<div class="center">¿CÓMO SE DESCRIBE LA COMPRENSIÓN DE INSTRUCCIONES ORALES EN INGLÉS CON VOCABULARIO DE COLORES?</div>
 
-<div class="central">
-  Descripción de la comprensión de instrucciones orales en inglés con vocabulario de colores
+<div class="question">
+<b>Problemática:</b>
+<p>Algunos participantes requerían repetición, apoyo o explicación adicional para comprender y responder a instrucciones orales relacionadas con los colores. Se requiere describir esta comprensión considerando sus características y las condiciones de las actividades.</p>
 </div>
 
 <div class="question">
-<h3>Problema de investigación</h3>
-<p>Durante las actividades de aprendizaje del inglés en la Dirección de Población con Discapacidad de la Alcaldía de Girón, algunos participantes necesitaron repetición, apoyo o explicación adicional para comprender y responder a instrucciones orales relacionadas con los colores.</p>
-</div>
-
-<div class="question">
-<h3>Pregunta de investigación</h3>
+<b>Pregunta de investigación:</b>
 <p>¿Qué particularidades definen la comprensión de instrucciones orales en inglés con vocabulario de colores en 12 personas adultas de 18 a 65 años con discapacidad múltiple, vinculadas a la Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander, durante las ocho semanas comprendidas entre el 19 de septiembre y el 7 de noviembre de 2024?</p>
 </div>
 
 <div class="question">
-<h3>Objetivo general</h3>
+<b>Objetivo general:</b>
 <p>Describir las particularidades de la comprensión de instrucciones orales en inglés con vocabulario de colores en 12 personas adultas de 18 a 65 años con discapacidad múltiple, vinculadas a la Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander, durante las ocho semanas comprendidas entre el 19 de septiembre y el 7 de noviembre de 2024.</p>
 </div>
 
-<h3>Objetivos específicos y ruta de análisis</h3>
-<div class="grid">
-
-<div class="node">
-<h3>OE1. Discriminación</h3>
-<p>Identificar cómo los participantes discriminan las palabras de colores mencionadas en instrucciones orales en inglés.</p>
-<p><b>Técnica:</b> observación estructurada.</p>
-<p><b>Instrumentos:</b> rúbrica pictográfica y formato de observación.</p>
-<p><b>Análisis:</b> codificación y análisis descriptivo de respuestas.</p>
+<h3>Ramas: objetivos específicos y correspondencia metodológica</h3>
+<div class="branches">
+<div class="branch gold">
+<h3>OE1 · Discriminación de vocablos</h3>
+<p><b>Objetivo:</b> Identificar cómo los participantes discriminan los vocablos de colores mencionados en instrucciones orales en inglés.</p>
+<div class="sub"><b>Categoría</b><p>Discriminación de vocablos de colores.</p></div>
+<div class="sub"><b>Técnica</b><p>Observación estructurada.</p></div>
+<div class="sub"><b>Instrumentos</b><p>Rúbrica pictográfica y formato de observación.</p></div>
+<div class="sub"><b>Fuente</b><p>Participantes (12).</p></div>
+<div class="sub"><b>Análisis</b><p>Codificación y análisis descriptivo de las respuestas.</p></div>
 </div>
 
-<div class="node">
-<h3>OE2. Ejecución y autonomía</h3>
-<p>Describir la ejecución de instrucciones orales relacionadas con colores y el grado de autonomía, considerando los apoyos requeridos.</p>
-<p><b>Técnica:</b> observación estructurada.</p>
-<p><b>Instrumentos:</b> rúbrica pictográfica, notas de campo y registros audiovisuales.</p>
-<p><b>Análisis:</b> categorización según ejecución, autonomía y apoyos requeridos.</p>
+<div class="branch teal">
+<h3>OE2 · Ejecución y autonomía</h3>
+<p><b>Objetivo:</b> Describir la ejecución de instrucciones orales relacionadas con los colores y el grado de autonomía, considerando los apoyos requeridos.</p>
+<div class="sub"><b>Categoría</b><p>Ejecución de instrucciones y autonomía de respuesta.</p></div>
+<div class="sub"><b>Técnica</b><p>Observación estructurada.</p></div>
+<div class="sub"><b>Instrumentos</b><p>Rúbrica pictográfica, notas de campo y registros audiovisuales.</p></div>
+<div class="sub"><b>Fuente</b><p>Participantes (12).</p></div>
+<div class="sub"><b>Análisis</b><p>Categorización según ejecución, autonomía y apoyos requeridos.</p></div>
 </div>
 
-<div class="node">
-<h3>OE3. Variaciones según complejidad</h3>
-<p>Analizar las variaciones en la comprensión y ejecución de instrucciones orales en inglés según su complejidad.</p>
-<p><b>Técnica:</b> observación y revisión de registros.</p>
-<p><b>Instrumentos:</b> formato de observación, notas de campo y grabaciones de audio y video.</p>
-<p><b>Análisis:</b> codificación, comparación constante y análisis temático.</p>
+<div class="branch purple">
+<h3>OE3 · Variaciones según complejidad</h3>
+<p><b>Objetivo:</b> Analizar las variaciones observadas en la comprensión y ejecución de instrucciones orales en inglés según su complejidad.</p>
+<div class="sub"><b>Categoría</b><p>Comprensión y ejecución de instrucciones según su complejidad.</p></div>
+<div class="sub"><b>Técnica</b><p>Observación y revisión de registros.</p></div>
+<div class="sub"><b>Instrumentos</b><p>Formato de observación, notas de campo y grabaciones de audio y video.</p></div>
+<div class="sub"><b>Fuente</b><p>Registros de sesiones y participantes (12).</p></div>
+<div class="sub"><b>Análisis</b><p>Codificación, comparación constante y análisis temático.</p></div>
 </div>
 
-<div class="node">
-<h3>OE4. Condiciones de las actividades</h3>
-<p>Caracterizar las condiciones de las actividades de aprendizaje en las que se presentan instrucciones orales en inglés relacionadas con el vocabulario de colores.</p>
-<p><b>Técnica:</b> observación y registro de campo.</p>
-<p><b>Instrumentos:</b> notas de campo y formato de observación.</p>
-<p><b>Análisis:</b> categorización y análisis descriptivo.</p>
+<div class="branch blue">
+<h3>OE4 · Condiciones de las actividades</h3>
+<p><b>Objetivo:</b> Caracterizar las condiciones de las actividades de aprendizaje en las que se presentan instrucciones orales en inglés relacionadas con el vocabulario de los colores.</p>
+<div class="sub"><b>Categoría</b><p>Condiciones de las actividades de aprendizaje.</p></div>
+<div class="sub"><b>Técnica</b><p>Observación y registro de campo.</p></div>
+<div class="sub"><b>Instrumentos</b><p>Notas de campo y formato de observación.</p></div>
+<div class="sub"><b>Fuente</b><p>Contexto institucional y registros de las sesiones.</p></div>
+<div class="sub"><b>Análisis</b><p>Categorización y análisis descriptivo.</p></div>
 </div>
 
+<div class="branch orange">
+<h3>Diseño de investigación</h3>
+<ul>
+<li><b>Ambiente natural:</b> investigación de campo.</li>
+<li><b>Amplitud de foco:</b> univariable.</li>
+<li><b>Nivel de intervención:</b> descriptivo.</li>
+<li><b>Secuencia de mediciones:</b> longitudinal.</li>
+</ul>
+<p>Observaciones sucesivas durante ocho semanas: 19 de septiembre al 7 de noviembre de 2024.</p>
 </div>
 
-<h3>Diseño metodológico</h3>
-<div class="grid">
-<div class="node">
-<h3>Tipo de investigación</h3>
-<p>Descriptiva.</p>
-</div>
-<div class="node">
-<h3>Población y muestra</h3>
-<p>12 personas adultas de 18 a 65 años con discapacidad múltiple. Muestreo intencional; participan los 12 integrantes.</p>
-</div>
-<div class="node">
-<h3>Diseño y alcance</h3>
-<p>Investigación de campo en ambiente natural, enfoque univariable, nivel descriptivo y medición longitudinal durante ocho semanas.</p>
-</div>
-<div class="node">
-<h3>Periodo</h3>
-<p>Del 19 de septiembre al 7 de noviembre de 2024.</p>
-</div>
-</div>
-
-<h3>Etapas del proceso investigativo</h3>
-<div class="grid">
-<div class="node">
-<h3>1. Diagnóstico</h3>
-<p>Identificar dificultades iniciales en instrucciones orales y vocabulario de colores.</p>
-</div>
-<div class="node">
-<h3>2. Implementación</h3>
-<p>Desarrollar actividades de aprendizaje y aplicar instrumentos de observación y registro.</p>
-</div>
-<div class="node">
-<h3>3. Analítica</h3>
-<p>Organizar y clasificar datos; identificar patrones, diferencias y respuestas.</p>
-</div>
-<div class="node">
-<h3>4. Interpretación y validación</h3>
-<p>Interpretar mediante comparación de observaciones, notas de campo, rúbricas pictográficas y registros audiovisuales.</p>
-</div>
-<div class="node">
-<h3>5. Socialización</h3>
-<p>Presentar resultados y formular conclusiones y recomendaciones.</p>
+<div class="branch green">
+<h3>Tipo, población y muestra</h3>
+<ul>
+<li><b>Tipo:</b> descriptiva.</li>
+<li><b>Población:</b> 12 personas adultas de 18 a 65 años con discapacidad múltiple.</li>
+<li><b>Muestra:</b> 12 participantes.</li>
+<li><b>Muestreo:</b> intencional.</li>
+</ul>
 </div>
 </div>
 
-<h3>Resultados y conclusiones</h3>
-<div class="grid">
-<div class="node">
-<h3>Reconocimiento de colores</h3>
-<p>Siete de los doce participantes mostraron avances observables; cinco presentaron respuestas limitadas o inconsistentes.</p>
+<h3>Rama: cinco estadios del proceso investigativo</h3>
+<div class="timeline">
+<div class="stage"><b>1. Diagnóstico</b>Identificación de dificultades iniciales en comprensión de instrucciones orales y reconocimiento de colores.</div>
+<div class="stage"><b>2. Implementación</b>Actividades de aprendizaje y aplicación de instrumentos de observación y registro.</div>
+<div class="stage"><b>3. Analítico</b>Organización y clasificación de información; identificación de patrones, diferencias y respuestas.</div>
+<div class="stage"><b>4. Interpretativo y de validación</b>Comparación de observaciones, notas de campo, rúbricas pictográficas y registros audiovisuales.</div>
+<div class="stage"><b>5. Socialización</b>Presentación de resultados y formulación de conclusiones y recomendaciones.</div>
 </div>
-<div class="node">
-<h3>Ejecución y autonomía</h3>
-<p>Algunos ejecutaron instrucciones con mayor autonomía y menos apoyo. Otros necesitaron repetición, orientación visual, modelado físico y acompañamiento continuo.</p>
+
+<h3>Rama: resultados y conclusiones</h3>
+<div class="branches">
+<div class="branch gold">
+<h3>OE1 · Reconocimiento</h3>
+<p>7 de 12 participantes evidenciaron avances observables; 5 presentaron respuestas limitadas o poco consistentes.</p>
 </div>
-<div class="node">
-<h3>Comprensión y complejidad</h3>
+<div class="branch teal">
+<h3>OE2 · Autonomía</h3>
+<p>Algunos ejecutaron instrucciones con mayor autonomía y menor apoyo; otros requirieron repetición, orientación visual, modelado físico y asistencia continua.</p>
+</div>
+<div class="branch purple">
+<h3>OE3 · Comprensión</h3>
 <p>La repetición, los gestos y los apoyos visuales facilitaron la comprensión y ejecución. Las respuestas variaron según las condiciones individuales.</p>
 </div>
-<div class="node">
-<h3>Condiciones de aprendizaje</h3>
-<p>Las actividades presenciales, tarjetas de colores, apoyos visuales, repetición y movimiento corporal favorecieron la participación y comprensión oral.</p>
+<div class="branch blue">
+<h3>OE4 · Actividades</h3>
+<p>Actividades presenciales, tarjetas de colores, apoyos visuales, repetición y movimiento corporal favorecieron participación y comprensión oral.</p>
 </div>
 </div>
 
 <div class="question">
+<b>Conclusión general:</b>
+<p>Se describieron diferentes niveles de reconocimiento, comprensión y ejecución. Siete participantes mostraron avances observables y cinco presentaron respuestas limitadas o poco consistentes. La autonomía y los apoyos requeridos variaron según las condiciones individuales.</p>
+</div>
+
+<div class="branches">
+<div class="branch orange">
 <h3>Limitaciones</h3>
 <ul>
 <li>Diversidad de condiciones motoras, cognitivas y comunicativas.</li>
-<li>Necesidad de apoyo permanente en algunos participantes.</li>
-<li>Condiciones de espacio y recursos institucionales.</li>
+<li>Necesidad de apoyos permanentes en algunos participantes.</li>
+<li>Condiciones del espacio y recursos didácticos.</li>
 <li>Asistencia y participación inconsistentes.</li>
-<li>Un solo contexto institucional y grupo pequeño, lo que limita la transferibilidad.</li>
+<li>Un contexto institucional y grupo reducido limitan la transferencia de resultados.</li>
 </ul>
 </div>
-
-<div class="question">
+<div class="branch green">
 <h3>Recomendaciones</h3>
 <ul>
-<li>Fortalecer estrategias multisensoriales con instrucciones auditivas, apoyos visuales, repetición y movimiento.</li>
-<li>Adaptar actividades y materiales a las condiciones cognitivas, motoras y comunicativas y al ritmo de cada participante.</li>
-<li>Utilizar recursos visuales como tarjetas pictográficas.</li>
-<li>Fortalecer la formación docente en métodos inclusivos y experienciales, especialmente TPR.</li>
-<li>Desarrollar futuras investigaciones con mayor tiempo de observación y grupos diversos.</li>
+<li>Estrategias multisensoriales: instrucciones auditivas, apoyos visuales, repetición y movimiento.</li>
+<li>Adaptar actividades y materiales a las condiciones y ritmos individuales.</li>
+<li>Incorporar recursos visuales accesibles y tarjetas pictográficas.</li>
+<li>Fortalecer formación docente en metodologías inclusivas y TPR.</li>
+<li>Promover futuras investigaciones con mayor observación y grupos diversos.</li>
 </ul>
 </div>
-
-<div class="note">
-<b>Nota metodológica:</b> se conserva la información de la matriz original. En la Tabla 1, el Evento 2 se registra como «No aplica».
 </div>
 </section>
-
 </main>
 
-<footer>
-<p>Proyecto de investigación – Grupo 12</p>
-</footer>
+<footer>Proyecto de investigación · Grupo 12</footer>
 
 <script>
-function textoParaLectura() {
-  const secciones = document.querySelectorAll('.organizer');
-  return Array.from(secciones).map(seccion => seccion.innerText).join('. ');
-}
-
-function leerPagina() {
-  if (!('speechSynthesis' in window)) {
-    alert('Este navegador no tiene disponible la función de voz sintetizada.');
-    return;
-  }
-  speechSynthesis.cancel();
-  const lectura = new SpeechSynthesisUtterance(textoParaLectura());
-  lectura.lang = 'es-CO';
-  lectura.rate = 0.9;
-  lectura.pitch = 1;
-  const voces = speechSynthesis.getVoices();
-  const vozEspanol = voces.find(voz => voz.lang.toLowerCase().startsWith('es'));
-  if (vozEspanol) lectura.voice = vozEspanol;
-  speechSynthesis.speak(lectura);
+function leer(numero){
+ if(!('speechSynthesis' in window)){
+  alert('Este navegador no dispone de voz sintetizada.');
+  return;
+ }
+ speechSynthesis.cancel();
+ const texto=document.getElementById(numero===1?'mapa1':'mapa2').innerText;
+ const voz=new SpeechSynthesisUtterance(texto);
+ voz.lang='es-CO';
+ voz.rate=0.9;
+ const disponibles=speechSynthesis.getVoices();
+ const esp=disponibles.find(v=>v.lang.toLowerCase().startsWith('es'));
+ if(esp) voz.voice=esp;
+ speechSynthesis.speak(voz);
 }
 </script>
-
 </body>
 </html>
