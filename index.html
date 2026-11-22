@@ -1,324 +1,173 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Presentación interactiva animada | Grupo 12</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101d35">
+<title>Grupo 12 · Mapas mentales animados</title>
 <style>
-:root{--navy:#102c4b;--blue:#23658b;--teal:#1b9a91;--gold:#efb544;--violet:#8b72bd;--ink:#20334a;--muted:#607186;--line:#cbd8e5;--bg:#f2f6fa}
-*{box-sizing:border-box}
-body{margin:0;color:#edf4ff;font:16px/1.5 "Segoe UI",Arial,sans-serif;background:radial-gradient(ellipse at 15% 20%,rgba(105,54,180,.42),transparent 34%),radial-gradient(ellipse at 82% 28%,rgba(19,111,174,.38),transparent 32%),radial-gradient(ellipse at 55% 88%,rgba(155,45,129,.28),transparent 38%),linear-gradient(135deg,#050817 0%,#0b1230 48%,#09091d 100%);background-attachment:fixed;overflow-x:hidden}
-body:before,body:after{content:"";position:fixed;inset:-35%;pointer-events:none;z-index:-1;filter:blur(34px);opacity:.65}
-body:before{background:conic-gradient(from 40deg at 40% 45%,transparent 0 12%,rgba(87,52,176,.28) 18%,transparent 31%,rgba(24,135,190,.22) 43%,transparent 58%,rgba(174,54,142,.2) 72%,transparent 88%);animation:nebulaDrift 42s ease-in-out infinite alternate}
-body:after{inset:0;filter:none;opacity:.38;background-image:radial-gradient(1px 1px at 8% 18%,#fff 99%,transparent),radial-gradient(1.5px 1.5px at 24% 72%,#d8e7ff 99%,transparent),radial-gradient(1px 1px at 43% 31%,#fff 99%,transparent),radial-gradient(1.5px 1.5px at 68% 16%,#d8e7ff 99%,transparent),radial-gradient(1px 1px at 83% 61%,#fff 99%,transparent),radial-gradient(1px 1px at 92% 88%,#d8e7ff 99%,transparent);background-size:390px 310px;animation:starDrift 95s linear infinite}
-@keyframes nebulaDrift{0%{transform:translate(-3%,-2%) rotate(0deg) scale(1)}100%{transform:translate(4%,3%) rotate(18deg) scale(1.12)}}
-@keyframes starDrift{to{background-position:390px 310px}}
-header{padding:25px 16px;text-align:center;color:white;background:linear-gradient(120deg,rgba(8,18,48,.92),rgba(32,27,86,.88),rgba(9,77,105,.88));backdrop-filter:blur(10px);border-bottom:1px solid #a9c9ff33;background-size:180% 180%;animation:gradient 12s ease infinite}
-@keyframes gradient{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-h1{margin:0;font-size:clamp(1.4rem,3vw,2rem)}
-header p{margin:6px 0 0;color:#e3f0f2}
-main{max-width:1200px;margin:20px auto;padding:0 14px}
-.tabs,.controls{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:13px 0}
-button{border:0;border-radius:11px;padding:10px 14px;background:#e3ebf3;color:#183653;font-weight:700;cursor:pointer;transition:transform .2s,background .2s,box-shadow .2s}
-button:hover{transform:translateY(-2px);box-shadow:0 5px 14px #1736531c}
+:root{--bg:#0d1729;--panel:#15243a;--panel2:#1b2d46;--ink:#f3f7fb;--muted:#b7c5d5;--cyan:#61d5d0;--gold:#f1c56c;--violet:#b9a3ff;--blue:#78b9ff;--pink:#ff9eb8;--line:#45617e}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0%,#1d3552 0,#101d35 50%,#0b1424 100%);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
+header{padding:23px 18px 16px;text-align:center;max-width:1200px;margin:auto}
+.kicker{color:var(--cyan);font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800}
+h1{font-size:clamp(1.55rem,4vw,2.5rem);line-height:1.12;margin:8px auto;max-width:920px;letter-spacing:-.035em}
+header p{color:var(--muted);max-width:800px;margin:8px auto}
+.tabs{display:flex;justify-content:center;gap:10px;padding:10px 14px 16px}
+button{font:700 .9rem system-ui;border:1px solid #4d6681;border-radius:12px;padding:10px 15px;background:#1a2b43;color:#eaf4ff;cursor:pointer;transition:.2s}
+button:hover{transform:translateY(-2px);border-color:var(--cyan);box-shadow:0 8px 24px #0004}
 button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
-button.primary{background:#176d7b;color:white}
-button.dark{background:#203c59;color:white}
-.tab[aria-selected=true]{background:#203c59;color:white}
-section{display:none}
-section.active{display:block}
-.intro{text-align:center;color:#d4e2fa;max-width:850px;margin:0 auto 16px}
-.presentation{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.7fr);gap:15px;align-items:stretch}
-.stage{position:relative;min-height:620px;border-radius:20px;border:1px solid #9bbcff55;overflow:hidden;background:radial-gradient(circle at 50% 45%,rgba(35,48,105,.88),rgba(9,15,39,.94) 72%);padding:16px;box-shadow:0 12px 45px #0007,inset 0 0 50px #7a55d522}
-.stage:before,.stage:after{content:"";position:absolute;border:1px solid #8da9ed55;border-radius:50%;width:440px;height:440px;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none}
-.stage:after{width:560px;height:560px;border-style:dashed;animation:spin 50s linear infinite}
-@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
-.hub{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);width:230px;min-height:145px;border-radius:28px;display:grid;place-items:center;text-align:center;padding:20px;color:white;font-weight:850;background:linear-gradient(140deg,#153c61,#167d82);box-shadow:0 12px 35px #173e5d40;animation:breathe 4s ease-in-out infinite}
-@keyframes breathe{0%,100%{box-shadow:0 10px 25px #173e5d30}50%{box-shadow:0 14px 38px #168c8b60}}
-.nodes{position:absolute;inset:0;z-index:4}
-.node{position:absolute;transform:translate(-50%,-50%) scale(.94);width:clamp(130px,24%,190px);min-height:70px;border:2px solid var(--c);border-radius:15px;background:rgba(14,25,57,.96);color:#f5f7ff;padding:10px;text-align:center;box-shadow:0 6px 22px #0008;opacity:.94;transition:opacity .35s,transform .35s,background .35s;cursor:pointer;backdrop-filter:blur(8px)}
-.node strong{display:block;font-size:.9rem}
-.node small{display:block;color:#c5d5f4;font-size:.7rem;margin-top:3px}
-.node.active,.node.visited{opacity:1;transform:translate(-50%,-50%) scale(1.05);background:color-mix(in srgb,var(--c),white 90%);box-shadow:0 0 0 5px color-mix(in srgb,var(--c),transparent 84%),0 9px 24px #1e38502b}
-.node.active{animation:pop .55s ease}
-@keyframes pop{0%{transform:translate(-50%,-50%) scale(.85)}65%{transform:translate(-50%,-50%) scale(1.12)}100%{transform:translate(-50%,-50%) scale(1.05)}}
-.wires{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
-.wires line{stroke:#a8bdcf;stroke-width:2.5;stroke-dasharray:7 7;stroke-dashoffset:0;transition:stroke .4s,stroke-width .4s}
-.wires line.lit{stroke:var(--gold);stroke-width:4;animation:dash 1.4s linear infinite}
-@keyframes dash{to{stroke-dashoffset:-28}}
-.info{background:rgba(12,22,51,.94);color:#eaf1ff;border:1px solid #9bbcff55;border-radius:18px;padding:20px;min-height:300px;box-shadow:0 10px 30px #0006;backdrop-filter:blur(12px)}
-.eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);font-weight:850}
-.info h3{margin:5px 0 10px;color:#fff}
-.info ul{padding-left:20px}
-.info li{margin:7px 0}
-.hint{color:#c5d5f4;font-size:.9rem}
-.progress{height:8px;background:#e8eef4;border-radius:99px;overflow:hidden;margin:14px 0}
-.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .5s}
-.counter{color:#c5d5f4;font-size:.82rem}
-.timeline{margin-top:16px;padding:18px;background:rgba(12,22,51,.94);color:#eaf1ff;border:1px solid #9bbcff55;border-radius:17px;backdrop-filter:blur(12px)}
-.steps{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
-.steps button.active{background:var(--gold);color:#26374a}
-.stepdetail{padding:12px;background:#17264a;border-left:4px solid var(--gold);border-radius:9px}
-footer{text-align:center;padding:22px;color:#c5d5f4;font-size:.85rem}
-@media(max-width:850px){.presentation{grid-template-columns:1fr}.stage{min-height:650px}}
-@media(max-width:560px){.stage{min-height:700px;padding:8px}.hub{width:145px;min-height:120px;font-size:.78rem;padding:12px}.node{width:31%;min-height:65px;padding:7px 4px}.node strong{font-size:.75rem}.node small{font-size:.62rem}.stage:before{width:300px;height:300px}.stage:after{width:390px;height:390px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
-@media print{.controls,.tabs,.info,.timeline{display:none!important}section{display:block!important;page-break-after:always}.presentation{display:block}.stage{height:650px}}
-</style>
-</head>
+button.active{background:var(--cyan);color:#10243a;border-color:var(--cyan)}
+.controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:0 12px 14px}
+.controls .start{background:var(--gold);color:#17243a;border-color:var(--gold)}
+#status{font-size:.84rem;color:#d6e4f0;text-align:center;min-height:24px;padding:0 12px 9px}
+main{max-width:1250px;margin:auto;padding:0 15px 30px}
+.mapview{display:none;animation:fadein .45s ease}.mapview.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.mapheading{text-align:center;margin:4px 0 13px;color:var(--muted);font-size:.92rem}
+.mindmap{position:relative;max-width:1120px;margin:0 auto;min-height:560px;border:1px solid #314963;border-radius:25px;overflow:hidden;background:radial-gradient(circle at center,#203b58 0,#172b43 34%,#122238 72%,#101d30 100%);box-shadow:0 18px 60px #0005}
+.mindmap:before,.mindmap:after{content:"";position:absolute;border:1px solid #7c9ab52b;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none}
+.mindmap:before{width:390px;height:390px}.mindmap:after{width:650px;height:650px;border-style:dashed;animation:rotate 65s linear infinite}
+@keyframes rotate{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.wires path{fill:none;stroke-width:2.2;stroke-dasharray:9 8;stroke-dashoffset:180;opacity:.65;animation:draw 2.3s ease forwards,flow 8s linear infinite}
+@keyframes draw{to{stroke-dashoffset:0}}@keyframes flow{to{stroke-dashoffset:-120}}
+.center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:220px;min-height:145px;border-radius:50%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:23px;background:linear-gradient(145deg,#285575,#172f4b);border:2px solid var(--cyan);box-shadow:0 0 0 9px #61d5d015,0 0 42px #61d5d045;z-index:3;animation:breathe 4s ease-in-out infinite}
+@keyframes breathe{50%{box-shadow:0 0 0 16px #61d5d00a,0 0 58px #61d5d05c}}
+.center small{color:var(--gold);text-transform:uppercase;letter-spacing:.13em;font-weight:800;font-size:.67rem}.center strong{font-size:1.05rem;line-height:1.2;margin-top:5px}
+.branch{position:absolute;width:205px;min-height:92px;border:1px solid #58718e;border-radius:17px;padding:13px 14px;background:linear-gradient(145deg,#203852,#172940);color:var(--ink);text-align:left;z-index:4;box-shadow:0 8px 22px #0003;opacity:0;animation:pop .65s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--delay,0s)}
+@keyframes pop{from{opacity:0;transform:scale(.75) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.branch:hover{background:#294663;transform:scale(1.04);border-color:var(--branch);z-index:6}
+.branch .tag{font-size:.67rem;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:var(--branch);display:block;margin-bottom:4px}
+.branch strong{font-size:.9rem;line-height:1.22;display:block}.branch .hint{display:block;color:#b8c8d8;font-size:.73rem;margin-top:5px}
+.branch.selected{border:2px solid var(--branch);box-shadow:0 0 0 5px color-mix(in srgb,var(--branch) 20%,transparent),0 10px 28px #0005}
+.detail{max-width:1120px;margin:14px auto 0;background:linear-gradient(120deg,#172941,#1b304b);border:1px solid #38536f;border-radius:19px;padding:18px 20px;display:grid;grid-template-columns: minmax(0,1fr) auto;gap:15px;align-items:center}
+.detail .label{color:var(--gold);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:800}
+.detail h2{margin:4px 0 6px;font-size:1.18rem}.detail p{margin:0;color:#d3deea;white-space:pre-line}
+.detail .counter{color:var(--cyan);font-size:.8rem;font-weight:800;white-space:nowrap}
+.tip{text-align:center;color:#aebed0;font-size:.8rem;margin:10px}
+.matrix{max-width:1120px;margin:14px auto;background:#14263d;border:1px solid #334d69;border-radius:17px;padding:16px;overflow:hidden}
+.matrix h3{margin:0 0 10px;color:var(--gold);font-size:1rem}
+table{width:100%;border-collapse:collapse;font-size:.82rem}th,td{padding:9px;border:1px solid #405a75;text-align:left;vertical-align:top}th{background:#203a56;color:#8fe2dd}td{color:#e0e9f2}
+@media(max-width:760px){
+ header{padding:19px 13px 10px}.tabs{padding-bottom:12px}.controls button{flex:1 1 40%}
+ .mindmap{min-height:0;padding:18px 12px 20px;border-radius:19px}
+ .mindmap:before,.mindmap:after,.wires{display:none}
+ .center{position:relative;left:auto;top:auto;transform:none;margin:5px auto 20px;width:min(245px,80%);min-height:112px;border-radius:23px}
+ .branch{position:relative;display:block;width:100%;min-height:0;margin:10px 0;animation:mobilepop .45s ease both;animation-delay:var(--delay,0s)}
+ @keyframes mobilepop{from{opacity:0;transform:translateX(-15px)}to{opacity:1;transform:none}}
+ .branch:before{content:"";position:absolute;left:21px;top:-11px;height:11px;border-left:2px dashed var(--branch);opacity:.8}
+ .detail{grid-template-columns:1fr;padding:15px}.detail .counter{order:-1}
+ table{display:block;overflow-x:auto;white-space:normal}th,td{min-width:130px}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style></head>
 <body>
 <header>
-<h1>Organizadores gráficos animados</h1>
-<p>Proyecto de investigación · Grupo 12 · Tablas 1 y 3</p>
+<div class="kicker">Especialización · Grupo 12</div>
+<h1>Mapas mentales animados de la investigación</h1>
+<p>Comprensión de instrucciones orales en inglés con vocabulario de colores en personas adultas con discapacidad múltiple.</p>
 </header>
-<main>
-<div class="tabs">
-<button id="tab-r" class="tab" aria-selected="true" onclick="changeMap('r')">1. Marco referencial</button>
-<button id="tab-m" class="tab" aria-selected="false" onclick="changeMap('m')">2. Marco metodológico</button>
-</div>
+<nav class="tabs">
+<button id="refTab" class="active">✦ Marco referencial · Tabla 1</button>
+<button id="metTab">✧ Marco metodológico · Tabla 3</button>
+</nav>
 <div class="controls">
-<button class="primary" onclick="startTour()">▶ Iniciar recorrido</button>
-<button onclick="pauseTour()">⏸ Pausar</button>
-<button onclick="resumeTour()">⏵ Continuar</button>
-<button onclick="stopTour()">■ Detener</button>
-<button onclick="restartTour()">↻ Reiniciar</button>
-<button onclick="toggleVoice()" id="voiceBtn">🔊 Voz activada</button>
-<button onclick="testVoice()">🎙 Probar voz</button>
-<button class="dark" onclick="window.print()">Imprimir / PDF</button>
+<button class="start" id="tour">▶ Iniciar recorrido narrado</button>
+<button id="pause">Ⅱ Pausar</button><button id="resume">▶ Continuar</button><button id="stop">■ Detener</button>
+<button id="test">♫ Probar voz</button>
+<button id="pdf" onclick="window.print()">⇩ Imprimir / PDF</button>
 </div>
-
-<section id="map-r" class="active">
-<p class="intro">El recorrido ilumina las conexiones entre el tema central y las ramas. También puedes seleccionar cualquier nodo para explorarlo libremente.</p>
-<div class="presentation">
-<div class="stage" id="stage-r">
-<div class="hub">COMPRENSIÓN DE INSTRUCCIONES ORALES EN INGLÉS CON VOCABULARIO DE COLORES</div>
-<svg class="wires" id="wires-r"></svg>
-<div class="nodes" id="nodes-r"></div>
-</div>
-<aside class="info" id="info-r">
-<div class="eyebrow">Marco referencial · Tabla 1</div>
-<h3>Explora las ramas</h3>
-<p>Selecciona una rama o inicia el recorrido automático para conocer las ideas esenciales del marco referencial.</p>
-<p class="hint">La narración acompaña el recorrido si la voz está activada.</p>
-<div class="progress"><span id="prog-r"></span></div>
-<div class="counter" id="count-r">Listo para comenzar</div>
-</aside>
-</div>
+<div id="status" role="status">Selecciona una rama para explorarla o inicia el recorrido narrado.</div>
+<main>
+<section class="mapview active" id="refView">
+<div class="mapheading">Mapa 1 · Selecciona los nodos que rodean el concepto central</div>
+<div class="mindmap" id="refMap"><svg class="wires" viewBox="0 0 1120 560" preserveAspectRatio="none" aria-hidden="true">
+<path d="M560 280 Q400 120 180 90" stroke="#61d5d0"/><path d="M560 280 Q560 80 560 65" stroke="#f1c56c"/><path d="M560 280 Q850 120 950 95" stroke="#b9a3ff"/><path d="M560 280 Q880 280 960 280" stroke="#78b9ff"/><path d="M560 280 Q820 460 930 470" stroke="#ff9eb8"/><path d="M560 280 Q560 480 560 495" stroke="#61d5d0"/><path d="M560 280 Q260 450 160 465" stroke="#f1c56c"/><path d="M560 280 Q230 270 145 275" stroke="#b9a3ff"/></svg>
+<div class="center"><small>Concepto central</small><strong>Comprensión oral del inglés con vocabulario de colores</strong></div>
+<div id="refBranches"></div></div>
+<div class="detail" id="refDetail"><div><div class="label">Explora el mapa</div><h2>Marco referencial</h2><p>Selecciona una rama para desplegar sus conceptos, autores y referentes normativos.</p></div><div class="counter">0 / 8 ramas</div></div>
+<div class="tip">Las ramas aparecen progresivamente. Toca cualquier nodo para ver su contenido y escuchar su explicación.</div>
 </section>
-
-<section id="map-m">
-<p class="intro">Explora la coherencia del proyecto desde su problemática hasta sus conclusiones. El recorrido automático destaca cada componente en secuencia.</p>
-<div class="presentation">
-<div class="stage" id="stage-m">
-<div class="hub">MARCO METODOLÓGICO<br>Comprensión oral del inglés y vocabulario de colores</div>
-<svg class="wires" id="wires-m"></svg>
-<div class="nodes" id="nodes-m"></div>
-</div>
-<aside class="info" id="info-m">
-<div class="eyebrow">Marco metodológico · Tabla 3</div>
-<h3>Explora las ramas</h3>
-<p>Selecciona una rama o inicia el recorrido automático.</p>
-<div class="progress"><span id="prog-m"></span></div>
-<div class="counter" id="count-m">Listo para comenzar</div>
-</aside>
-</div>
-<div class="timeline">
-<div class="eyebrow">Secuencia del proceso investigativo</div>
-<h3>Los cinco estadios</h3>
-<div class="steps" id="steps"></div>
-<div class="stepdetail" id="stepdetail">Durante el recorrido automático se destacará cada estadio.</div>
-</div>
+<section class="mapview" id="metView">
+<div class="mapheading">Mapa 2 · La coherencia metodológica parte de la pregunta y conecta cada decisión del estudio</div>
+<div class="mindmap" id="metMap"><svg class="wires" viewBox="0 0 1120 560" preserveAspectRatio="none" aria-hidden="true">
+<path d="M560 280 Q400 110 180 90" stroke="#61d5d0"/><path d="M560 280 Q560 70 560 65" stroke="#f1c56c"/><path d="M560 280 Q850 120 950 95" stroke="#b9a3ff"/><path d="M560 280 Q880 280 960 280" stroke="#78b9ff"/><path d="M560 280 Q820 460 930 470" stroke="#ff9eb8"/><path d="M560 280 Q560 480 560 495" stroke="#61d5d0"/><path d="M560 280 Q260 450 160 465" stroke="#f1c56c"/><path d="M560 280 Q230 270 145 275" stroke="#b9a3ff"/></svg>
+<div class="center"><small>Pregunta central</small><strong>¿Qué particularidades definen la comprensión de instrucciones orales?</strong></div>
+<div id="metBranches"></div></div>
+<div class="detail" id="metDetail"><div><div class="label">Explora el mapa</div><h2>Marco metodológico</h2><p>Selecciona una rama para examinar la problemática, los objetivos, el diseño y los resultados.</p></div><div class="counter">0 / 8 ramas</div></div>
+<div class="matrix"><h3>Correspondencia entre objetivos específicos y metodología</h3>
+<table><thead><tr><th>Objetivo</th><th>Categoría</th><th>Técnica</th><th>Instrumento</th><th>Fuente</th><th>Análisis</th></tr></thead><tbody>
+<tr><td>OE1 · Discriminar vocablos de colores</td><td>Discriminación de vocablos</td><td>Observación estructurada</td><td>Rúbrica pictográfica y formato de observación</td><td>12 participantes</td><td>Codificación y análisis descriptivo</td></tr>
+<tr><td>OE2 · Describir ejecución y autonomía</td><td>Ejecución y autonomía</td><td>Observación estructurada</td><td>Rúbrica, notas de campo y registros audiovisuales</td><td>12 participantes</td><td>Categorización según ejecución, autonomía y apoyos</td></tr>
+<tr><td>OE3 · Analizar variaciones según complejidad</td><td>Comprensión y ejecución según complejidad</td><td>Observación y revisión de registros</td><td>Formato, notas y grabaciones de audio y video</td><td>Registros de sesiones y 12 participantes</td><td>Codificación, comparación constante y análisis temático</td></tr>
+<tr><td>OE4 · Caracterizar condiciones de actividades</td><td>Condiciones de aprendizaje</td><td>Observación y registro de campo</td><td>Notas de campo y formato de observación</td><td>Contexto institucional y registros</td><td>Categorización y análisis descriptivo</td></tr>
+</tbody></table></div>
+<div class="tip">Los objetivos, técnicas, instrumentos y análisis se conservan de la Tabla 3 suministrada.</div>
 </section>
 </main>
-<footer>Presentación académica interactiva · Grupo 12</footer>
-
 <script>
+const C={cyan:'#61d5d0',gold:'#f1c56c',violet:'#b9a3ff',blue:'#78b9ff',pink:'#ff9eb8'};
 const ref=[
-["Teorías y estrategias","TPR · aprendizaje multisensorial","<ul><li>Respuesta Física Total (TPR) como metodología de enseñanza.</li><li>Estrategias pedagógicas adaptadas a las necesidades de aprendizaje.</li><li>Actividades prácticas y movimiento.</li><li>Repetición de instrucciones y apoyos visuales y gestuales.</li></ul>"],
-["Conceptos","Comprensión auditiva · colores","<ul><li>Aprendizaje del inglés como lengua extranjera.</li><li>Comprensión auditiva e instrucciones orales.</li><li>Vocabulario de colores, discriminación y reconocimiento de vocablos.</li><li>Asociación entre palabras escuchadas y referentes; ejecución de instrucciones.</li><li>Autonomía, apoyos requeridos y respuestas verbales y no verbales.</li></ul>"],
-["Investigaciones","Antecedentes citados","<p><b>Tema:</b> Takriyanti et al. (2022); Wiranto (2024); Yoshida y Aoyama (2024); Nemes (2024).</p><p><b>Evento:</b> Yoshida y Aoyama (2024); Wiranto (2024); González-Reyes et al. (2021); Kang y Scott (2021); Nemes (2024); Takriyanti et al. (2022).</p><p><b>Unidad:</b> Nemes (2024); Andreou y Argatzopoulou (2025); Kang y Scott (2021); Urbann et al. (2024).</p><p><b>Contexto:</b> Takriyanti et al. (2022); Bashiru y Smith (2023); Adnyani et al. (2024); Nemes (2024).</p>"],
-["Marco normativo","Convención · leyes","<ul><li>Convención sobre los Derechos de las Personas con Discapacidad (ONU, 2006).</li><li>Ley 1346 de 2009.</li><li>Ley 1618 de 2013.</li><li>Decreto 1421 de 2017, como referente de educación inclusiva dentro de su ámbito de aplicación.</li></ul>"],
-["Unidad de estudio","12 adultos · 18 a 65 años","<p>12 personas adultas con discapacidad múltiple, entre los 18 y los 65 años. Se consideran necesidades de apoyo, autonomía, participación y características individuales de aprendizaje.</p>"],
-["Contexto","Dirección de Población · Girón","<p>Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander. Se consideran condiciones de aprendizaje, recursos pedagógicos, accesibilidad, apoyos y participación.</p>"],
-["Datos estadísticos","Información disponible","<ul><li>12 participantes, entre 18 y 65 años.</li><li>No se dispone de datos estadísticos previos específicos sobre comprensión de instrucciones orales en inglés con vocabulario de colores en personas adultas con discapacidad múltiple.</li><li>No se cuenta con caracterización estadística institucional adicional.</li></ul>"],
-["Jerarquía","Tema · evento · unidad · contexto","<ul><li><b>Tema:</b> aprendizaje del inglés en personas con discapacidad múltiple.</li><li><b>Evento 1:</b> comprensión de instrucciones orales en inglés con vocabulario de colores.</li><li><b>Unidad:</b> 12 personas adultas con discapacidad múltiple, entre 18 y 65 años.</li><li><b>Contexto:</b> Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander.</li><li><b>Evento 2:</b> No aplica.</li></ul>"]
+['TEMA','Aprendizaje del inglés','Aprendizaje del inglés en personas con discapacidad múltiple. Tema específico: comprensión de instrucciones orales en inglés con vocabulario de colores en personas adultas con discapacidad múltiple.','cyan'],
+['EVENTO','Evento 1 · Comprensión oral','Comprensión de instrucciones orales en inglés con vocabulario de colores. Se entiende como interpretar indicaciones verbales, reconocer vocablos de colores y comprender la acción solicitada; asociar palabras escuchadas con referentes y responder mediante acciones, movimientos o formas de comunicación. Evento 2: No aplica.','gold'],
+['UNIDAD','12 personas adultas','12 personas adultas con discapacidad múltiple, entre 18 y 65 años.','violet'],
+['CONTEXTO','Dirección de Población con Discapacidad','Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander.','blue'],
+['TEORÍAS','TPR y aprendizaje multisensorial','Respuesta Física Total (TPR); aprendizaje multisensorial; estrategias pedagógicas adaptadas; repetición de instrucciones; apoyos visuales y gestuales; actividades prácticas y movimiento.','pink'],
+['DEFINICIONES','Conceptos fundamentales','Aprendizaje del inglés como lengua extranjera; comprensión auditiva; instrucciones orales; vocabulario de colores; discriminación y reconocimiento de vocablos; asociación palabra–referente; ejecución; autonomía; apoyos requeridos; respuestas verbales y no verbales; discapacidad múltiple.','cyan'],
+['INVESTIGACIONES','Antecedentes citados','Tema: Takriyanti et al. (2022); Wiranto (2024); Yoshida y Aoyama (2024); Nemes (2024). Evento: Yoshida y Aoyama (2024); Wiranto (2024); González-Reyes et al. (2021); Kang y Scott (2021); Nemes (2024); Takriyanti et al. (2022). Unidad: Nemes (2024); Andreou y Argatzopoulou (2025); Kang y Scott (2021); Urbann et al. (2024). Contexto: Takriyanti et al. (2022); Bashiru y Smith (2023); Adnyani et al. (2024); Nemes (2024).','gold'],
+['NORMATIVA Y DATOS','Leyes y cifras disponibles','Convención sobre los Derechos de las Personas con Discapacidad (ONU, 2006); Ley 1346 de 2009; Ley 1618 de 2013; Decreto 1421 de 2017 como referente de educación inclusiva dentro de su ámbito de aplicación. Datos: 12 participantes, entre 18 y 65 años. No se dispone de estadísticas previas específicas ni caracterización estadística institucional adicional.','violet']
 ];
-
 const met=[
-["Problemática","Situación identificada","<p>Durante las actividades de aprendizaje del inglés en la Dirección de Población con Discapacidad de la Alcaldía de Girón, algunos participantes requerían repetición, apoyo o explicación adicional para comprender y responder a instrucciones orales relacionadas con los colores.</p><p>Se requiere describir esta comprensión considerando las características de los participantes y las condiciones de las actividades.</p>"],
-["Pregunta","Pregunta de investigación","<p>¿Qué particularidades definen la comprensión de instrucciones orales en inglés con vocabulario de colores en 12 personas adultas de 18 a 65 años con discapacidad múltiple, vinculadas a la Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander, durante las ocho semanas comprendidas entre el 19 de septiembre y el 7 de noviembre de 2024?</p>"],
-["Objetivo general","Propósito del estudio","<p>Describir las particularidades de la comprensión de instrucciones orales en inglés con vocabulario de colores en 12 personas adultas de 18 a 65 años con discapacidad múltiple, vinculadas a la Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander, durante las ocho semanas comprendidas entre el 19 de septiembre y el 7 de noviembre de 2024.</p>"],
-["Cuatro objetivos","Objetivos y correspondencia metodológica","<p><b>OE1.</b> Identificar cómo discriminan los participantes los vocablos de colores mencionados en instrucciones orales en inglés. <b>Categoría:</b> discriminación de vocablos de colores. <b>Técnica:</b> observación estructurada. <b>Instrumentos:</b> rúbrica pictográfica y formato de observación. <b>Fuente:</b> 12 participantes. <b>Análisis:</b> codificación y análisis descriptivo.</p><hr><p><b>OE2.</b> Describir ejecución de instrucciones y autonomía, considerando apoyos requeridos. <b>Categoría:</b> ejecución y autonomía. <b>Técnica:</b> observación estructurada. <b>Instrumentos:</b> rúbrica pictográfica, notas de campo y registros audiovisuales. <b>Fuente:</b> 12 participantes. <b>Análisis:</b> categorización según ejecución, autonomía y apoyos.</p><hr><p><b>OE3.</b> Analizar variaciones de comprensión y ejecución según complejidad. <b>Categoría:</b> comprensión y ejecución según complejidad. <b>Técnicas:</b> observación y revisión de registros. <b>Instrumentos:</b> formato de observación, notas de campo y grabaciones de audio y video. <b>Fuente:</b> registros de sesiones y participantes. <b>Análisis:</b> codificación, comparación constante y análisis temático.</p><hr><p><b>OE4.</b> Caracterizar las condiciones de las actividades de aprendizaje. <b>Categoría:</b> condiciones de las actividades. <b>Técnicas:</b> observación y registro de campo. <b>Instrumentos:</b> notas de campo y formato de observación. <b>Fuente:</b> contexto institucional y registros de sesiones. <b>Análisis:</b> categorización y análisis descriptivo.</p>"],
-["Tipo, población y muestra","Clasificación y participantes","<ul><li><b>Tipo de investigación:</b> descriptiva.</li><li><b>Población:</b> 12 personas adultas, de 18 a 65 años, con discapacidad múltiple, vinculadas a la Dirección de Población con Discapacidad de la Alcaldía de Girón.</li><li><b>Muestra:</b> 12 participantes seleccionados mediante muestreo intencional.</li></ul>"],
-["Diseño","Campo · univariable · descriptivo · longitudinal","<ul><li><b>Ambiente natural:</b> investigación de campo.</li><li><b>Amplitud de foco:</b> univariable; comprensión de instrucciones orales en inglés con vocabulario de colores. Dimensiones: discriminación, ejecución, autonomía, apoyos y complejidad.</li><li><b>Nivel de intervención:</b> descriptivo.</li><li><b>Secuencia de mediciones:</b> longitudinal durante ocho semanas, del 19 de septiembre al 7 de noviembre de 2024.</li></ul>"],
-["Antecedentes y evento","Fundamentación del evento","<p><b>Antecedentes:</b> Sari et al. (2021); Kang y Scott (2021); González-Reyes et al. (2021); Wiranto (2024); Nemes (2024); Yoshida y Aoyama (2024).</p><p><b>Evento único:</b> comprensión de instrucciones orales en inglés con vocabulario de colores. Discriminación, ejecución, autonomía, apoyos y complejidad son dimensiones de análisis, no eventos independientes.</p>"],
-["Resultados y conclusiones","Hallazgos principales","<ul><li><b>OE1:</b> siete de doce participantes mostraron avances observables en reconocimiento de colores; cinco presentaron respuestas limitadas o poco consistentes.</li><li><b>OE2:</b> algunos ejecutaron instrucciones con mayor autonomía; otros necesitaron repetición, orientación visual, modelado físico y asistencia continua.</li><li><b>OE3:</b> repetición, gestos y apoyos visuales facilitaron comprensión y ejecución; hubo variaciones individuales.</li><li><b>OE4:</b> actividades presenciales, tarjetas de colores, apoyos visuales, repetición y movimiento favorecieron participación y comprensión oral.</li><li><b>Conclusión general:</b> distintos niveles de reconocimiento, comprensión y ejecución; autonomía y apoyos variaron según condiciones individuales.</li></ul>"],
-["Limitaciones y recomendaciones","Proyecciones","<p><b>Limitaciones:</b> diversidad de condiciones motoras, cognitivas y comunicativas; apoyos permanentes para algunos participantes; espacio y recursos condicionaron actividades; asistencia y participación variables; contexto específico y grupo reducido limitan transferencia.</p><p><b>Recomendaciones:</b> integrar instrucciones auditivas, apoyos visuales, repetición y movimiento; adaptar actividades y materiales a condiciones individuales; incorporar tarjetas pictográficas; fortalecer formación docente en metodologías inclusivas y TPR; promover futuras investigaciones con periodos más amplios y grupos diversos.</p>"]
+['PROBLEMÁTICA','Necesidad identificada','Durante las actividades de aprendizaje del inglés en la Dirección de Población con Discapacidad de la Alcaldía de Girón, algunos participantes requerían repetición, apoyo o explicación adicional para comprender y responder a instrucciones orales relacionadas con los colores.','cyan'],
+['PREGUNTA','Pregunta de investigación','¿Qué particularidades definen la comprensión de instrucciones orales en inglés con vocabulario de colores en 12 personas adultas de 18 a 65 años con discapacidad múltiple, vinculadas a la Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander, durante las ocho semanas comprendidas entre el 19 de septiembre y el 7 de noviembre de 2024?','gold'],
+['OBJETIVO GENERAL','Describir las particularidades','Describir las particularidades de la comprensión de instrucciones orales en inglés con vocabulario de colores en 12 personas adultas de 18 a 65 años con discapacidad múltiple, vinculadas a la Dirección de Población con Discapacidad de la Alcaldía de Girón, Santander, durante las ocho semanas comprendidas entre el 19 de septiembre y el 7 de noviembre de 2024.','violet'],
+['OBJETIVOS','Cuatro objetivos específicos','OE1: Identificar cómo los participantes discriminan los vocablos de colores mencionados en las instrucciones orales en inglés. OE2: Describir la ejecución de las instrucciones orales relacionadas con los colores y el grado de autonomía de las respuestas, considerando los apoyos requeridos. OE3: Analizar las variaciones observadas en la comprensión y ejecución de las instrucciones orales en inglés según su complejidad. OE4: Caracterizar las condiciones de las actividades de aprendizaje en las que se presentan las instrucciones orales en inglés relacionadas con el vocabulario de los colores.','blue'],
+['ANTECEDENTES','Investigaciones relacionadas','Sari et al. (2021): comprensión auditiva del inglés mediante TPR en estudiantes con autismo. Kang y Scott (2021): experiencias y estrategias para enseñanza de lenguas extranjeras a estudiantes sordos o con dificultades auditivas. González-Reyes et al. (2021): apoyos visuales para enseñanza del vocabulario en inglés a estudiantes sordos. Wiranto (2024): metodología TPR para vocabulario en inglés a estudiantes sordos. Nemes (2024): enseñanza de segunda lengua a estudiantes con discapacidad intelectual leve.','pink'],
+['EVENTO Y MUESTRA','Evento único · 12 participantes','Evento único: comprensión de instrucciones orales en inglés con vocabulario de colores. Dimensiones: discriminación de vocablos, ejecución de instrucciones, autonomía, apoyos requeridos y complejidad; no son eventos independientes. Tipo de investigación: descriptiva. Población: 12 personas adultas de 18 a 65 años con discapacidad múltiple. Muestra: 12 participantes mediante muestreo intencional.','cyan'],
+['DISEÑO','Campo · univariable · longitudinal','Ambiente natural: investigación de campo en la Dirección de Población con Discapacidad de la Alcaldía de Girón. Amplitud de foco: univariable. Nivel de intervención: descriptivo. Secuencia de mediciones: longitudinal, durante ocho semanas, del 19 de septiembre al 7 de noviembre de 2024.','gold'],
+['ESTADIOS, RESULTADOS Y MEJORAS','Cinco estadios y hallazgos','Estadio 1 Diagnóstico: identificación de dificultades iniciales. Estadio 2 Implementación: actividades con instrucciones orales sobre colores y aplicación de instrumentos. Estadio 3 Analítico: organización y clasificación de datos. Estadio 4 Interpretativo y validación: comparación de observaciones, notas, rúbricas y registros audiovisuales. Estadio 5 Socialización: presentación de resultados y recomendaciones. Resultados: 7 de 12 mostraron avances observables; 5 respuestas limitadas o poco consistentes. Algunos lograron más autonomía; otros necesitaron repetición, orientación visual, modelado físico y asistencia continua. Repetición, gestos, apoyos visuales, tarjetas de colores y movimiento favorecieron comprensión y participación. Limitaciones: diversidad de condiciones, apoyos permanentes, espacio y recursos, asistencia variable, grupo pequeño y contexto único. Recomendaciones: estrategias multisensoriales, adaptación de actividades, tarjetas pictográficas, formación docente en TPR y estudios futuros más amplios.','violet']
 ];
-
-const stages=[
-["Estadio 1 · Diagnóstico","Identificación de las dificultades iniciales en la comprensión de instrucciones orales en inglés y reconocimiento del vocabulario de los colores."],
-["Estadio 2 · Implementación","Desarrollo de actividades de aprendizaje con instrucciones orales relacionadas con los colores y aplicación de instrumentos de observación y registro."],
-["Estadio 3 · Analítico","Organización y clasificación de la información obtenida, identificando patrones, diferencias y respuestas de los participantes."],
-["Estadio 4 · Interpretativo y de validación","Interpretación de resultados mediante comparación de observaciones, notas de campo, rúbricas pictográficas y registros audiovisuales."],
-["Estadio 5 · Socialización","Presentación de resultados y formulación de conclusiones y recomendaciones pedagógicas."]
-];
-
-const palettes=["#23658b","#1b9a91","#d49a2a","#8b72bd","#b85c73","#527d91","#718b49","#68788c"];
-let current='r',timer=null,index=-1,voice=true;
-const initialized={r:false,m:false};
-
-function setup(key,data){
-  if(initialized[key]) return;
-  const stage=document.getElementById("stage-"+key);
-  const nodebox=document.getElementById("nodes-"+key);
-  const svg=document.getElementById("wires-"+key);
-  const w=stage.clientWidth || 900;
-  const h=stage.clientHeight || 620;
-  const cx=w/2,cy=h/2,rx=Math.min(w*.39,290),ry=Math.min(h*.39,245);
-  svg.setAttribute("viewBox",`0 0 ${w} ${h}`);
-
-  data.forEach((d,i)=>{
-    const a=(-90+i*360/data.length)*Math.PI/180;
-    const x=cx+rx*Math.cos(a),y=cy+ry*Math.sin(a);
-    const line=document.createElementNS("http://www.w3.org/2000/svg","line");
-    line.setAttribute("x1",cx);
-    line.setAttribute("y1",cy);
-    line.setAttribute("x2",x);
-    line.setAttribute("y2",y);
-    line.id=`wire-${key}-${i}`;
-    svg.append(line);
-
-    const b=document.createElement("button");
-    b.type="button";
-    b.className="node";
-    b.style.left=(x/w*100)+"%";
-    b.style.top=(y/h*100)+"%";
-    b.style.setProperty("--c",palettes[i%palettes.length]);
-    b.innerHTML=`<strong>${d[0]}</strong><small>${d[1]}</small>`;
-    b.onclick=()=>{stopTour();current=key;showNode(key,i)};
-    b.id=`node-${key}-${i}`;
-    nodebox.append(b);
-  });
-  initialized[key]=true;
+let current='ref',selected={ref:0,met:0},tourTimer=null,tourList=[],tourIndex=0,tourActive=false,tourPaused=false;
+const $=id=>document.getElementById(id);
+function makeBranches(which,data){
+ const host=$(which+'Branches');host.innerHTML='';
+ const positions=[['2%','5%'],['40%','2%'],['75%','7%'],['79%','42%'],['74%','76%'],['40%','80%'],['3%','76%'],['1%','42%']];
+ data.forEach((d,i)=>{
+  const b=document.createElement('button');b.className='branch';b.style.setProperty('--branch',C[d[3]]);b.style.setProperty('--delay',(i*.13)+'s');
+  if(innerWidth>760){b.style.left=positions[i][0];b.style.top=positions[i][1];}
+  b.innerHTML='<span class="tag">'+d[0]+'</span><strong>'+d[1]+'</strong><span class="hint">Toca para explorar ↗</span>';
+  b.addEventListener('click',()=>selectNode(which,i,true));b.id=which+'Node'+i;host.appendChild(b);
+ });
 }
-
-function showNode(key,i){
-  let data=key==='r'?ref:met;
-  document.querySelectorAll(`#nodes-${key} .node`).forEach((n,j)=>{
-    n.classList.toggle("active",j===i);
-    if(j===i)n.classList.add("visited");
-  });
-  document.querySelectorAll(`#wires-${key} line`).forEach((l,j)=>l.classList.toggle("lit",j===i));
-  let d=data[i];
-  document.getElementById("info-"+key).innerHTML=`<div class="eyebrow">${key==='r'?'Marco referencial · Tabla 1':'Marco metodológico · Tabla 3'}</div><h3>${d[0]}</h3><p class="hint">${d[1]}</p>${d[2]}<div class="progress"><span style="width:${(i+1)/data.length*100}%"></span></div><div class="counter">Apartado ${i+1} de ${data.length}</div>`;
-  document.getElementById("count-"+key).textContent=`Apartado ${i+1} de ${data.length}`;
-  document.getElementById("prog-"+key).style.width=((i+1)/data.length*100)+"%";
-  if(voice)say(d[0]+". "+d[1]);
+function selectNode(which,i,maybeSpeak=false){
+ current=which;selected[which]=i;const data=which==='ref'?ref:met,d=data[i];
+ [...$(which+'Branches').children].forEach((el,j)=>el.classList.toggle('selected',j===i));
+ const detail=$(which+'Detail');detail.querySelector('.label').textContent=d[0];detail.querySelector('h2').textContent=d[1];detail.querySelector('p').textContent=d[2];detail.querySelector('.counter').textContent=(i+1)+' / '+data.length+' ramas';
+ if(maybeSpeak) speak(d[1]+'. '+d[2]);
+ $('status').textContent='Rama '+(i+1)+' de '+data.length+': '+d[1]+'.';
 }
-
-let availableVoices=[];
-function loadVoices(){
-  if(!("speechSynthesis" in window)) return [];
-  availableVoices=window.speechSynthesis.getVoices()||[];
-  return availableVoices;
+function setMap(which){
+ stopTour();current=which;
+ $('refView').classList.toggle('active',which==='ref');$('metView').classList.toggle('active',which==='met');
+ $('refTab').classList.toggle('active',which==='ref');$('metTab').classList.toggle('active',which==='met');
+ selectNode(which,0,false);
 }
-if("speechSynthesis" in window){
-  loadVoices();
-  window.speechSynthesis.onvoiceschanged=loadVoices;
+$('refTab').onclick=()=>setMap('ref');$('metTab').onclick=()=>setMap('met');
+function getVoice(){let vs=speechSynthesis.getVoices();return vs.find(v=>/^es[-_](CO|MX|US|419)/i.test(v.lang))||vs.find(v=>/^es/i.test(v.lang))||null;}
+function speak(text){if(!('speechSynthesis'in window)){ $('status').textContent='La síntesis de voz no está disponible en este navegador.';return;}
+ speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text),v=getVoice();if(v)u.voice=v;u.lang=v?.lang||'es-CO';u.rate=.9;u.pitch=1;u.volume=1;u.onerror=e=>$('status').textContent='Error de voz: '+e.error; speechSynthesis.speak(u);}
+function stopTour(){clearTimeout(tourTimer);if('speechSynthesis'in window)speechSynthesis.cancel();tourActive=false;tourPaused=false;tourIndex=0;}
+function nextTour(){if(!tourActive||tourPaused)return;if(tourIndex>=tourList.length){tourActive=false;$('status').textContent='Recorrido narrado finalizado.';return;}
+ const [which,i]=tourList[tourIndex++];if(which!==current)setMap(which);selectNode(which,i,false);
+ const d=(which==='ref'?ref:met)[i];const u=new SpeechSynthesisUtterance(d[1]+'. '+d[2]),v=getVoice();if(v)u.voice=v;u.lang=v?.lang||'es-CO';u.rate=.88;u.pitch=1;u.volume=1;
+ $('status').textContent='Narrando '+(tourIndex)+' de '+tourList.length+': '+d[1];
+ u.onend=()=>{if(tourActive&&!tourPaused)tourTimer=setTimeout(nextTour,650);};
+ u.onerror=e=>{$('status').textContent='La voz se interrumpió: '+e.error;};speechSynthesis.speak(u);
 }
-function chooseSpanishVoice(){
-  loadVoices();
-  return availableVoices.find(v=>/^es-CO$/i.test(v.lang))
-    || availableVoices.find(v=>/^es[-_]/i.test(v.lang))
-    || null;
-}
-function say(t){
-  if(!voice)return;
-  if(!("speechSynthesis" in window)){
-    const count=document.getElementById("count-"+current);
-    if(count)count.textContent="Este navegador no ofrece voz sintetizada.";
-    return;
-  }
-  const synth=window.speechSynthesis;
-  synth.cancel();
-  const clean=String(t).replace(/<[^>]*>/g," ").replace(/\s+/g," ").trim();
-  const u=new SpeechSynthesisUtterance(clean);
-  u.lang="es-CO";
-  u.rate=.9;
-  u.pitch=1;
-  const selected=chooseSpanishVoice();
-  if(selected)u.voice=selected;
-  u.onerror=()=>{
-    const count=document.getElementById("count-"+current);
-    if(count)count.textContent="No se pudo reproducir la voz. Pulsa «Probar voz» o revisa el audio del dispositivo.";
-  };
-  try{synth.speak(u)}catch(e){
-    const count=document.getElementById("count-"+current);
-    if(count)count.textContent="Chrome no pudo iniciar la voz. Revisa el audio y vuelve a pulsar «Probar voz».";
-  }
-}
-
-function testVoice(){
-  voice=true;
-  document.getElementById("voiceBtn").textContent="🔊 Voz activada";
-  say("Hola. La narración de los organizadores gráficos está funcionando.");
-}
-
-function changeMap(k){
-  stopTour();
-  current=k;
-  document.getElementById("map-r").classList.toggle("active",k==='r');
-  document.getElementById("map-m").classList.toggle("active",k==='m');
-  document.getElementById("tab-r").setAttribute("aria-selected",k==='r');
-  document.getElementById("tab-m").setAttribute("aria-selected",k==='m');
-  setup(k,k==='r'?ref:met);
-}
-
-function activeData(){return current==='r'?ref:met}
-function startTour(){stopTour();index=-1;nextStep()}
-function nextStep(){
-  let data=activeData();
-  index++;
-  if(index>=data.length){stopTour();return}
-  showNode(current,index);
-  timer=setTimeout(nextStep,voice?8500:4800);
-}
-function pauseTour(){
-  if(timer){clearTimeout(timer);timer=null}
-  if("speechSynthesis" in window)window.speechSynthesis.pause();
-}
-function resumeTour(){
-  if("speechSynthesis" in window)window.speechSynthesis.resume();
-  if(timer===null)nextStep();
-}
-function stopTour(){
-  if(timer)clearTimeout(timer);
-  timer=null;
-  if("speechSynthesis" in window)window.speechSynthesis.cancel();
-}
-function restartTour(){startTour()}
-function toggleVoice(){
-  voice=!voice;
-  document.getElementById("voiceBtn").textContent=voice?"🔊 Voz activada":"🔇 Voz desactivada";
-}
-
-stages.forEach((s,i)=>{
-  let b=document.createElement("button");
-  b.textContent="Estadio "+(i+1);
-  b.onclick=()=>{
-    stopTour();
-    document.querySelectorAll("#steps button").forEach(x=>x.classList.remove("active"));
-    b.classList.add("active");
-    document.getElementById("stepdetail").innerHTML=`<b>${s[0]}</b><br>${s[1]}`;
-    if(voice)say(s[0]+". "+s[1]);
-  };
-  document.getElementById("steps").append(b);
-});
-
-setup('r',ref);
-document.getElementById("tab-r").addEventListener("click",()=>changeMap("r"));
-document.getElementById("tab-m").addEventListener("click",()=>changeMap("m"));
-</script>
-</body>
-</html>
+$('tour').onclick=()=>{stopTour();tourList=[...ref.map((_,i)=>['ref',i]),...met.map((_,i)=>['met',i])];tourIndex=0;tourActive=true;nextTour();};
+$('pause').onclick=()=>{if(tourActive){speechSynthesis.pause();tourPaused=true;$('status').textContent='Recorrido pausado.';}else if(speechSynthesis.speaking){speechSynthesis.pause();$('status').textContent='Voz pausada.';}};
+$('resume').onclick=()=>{if(tourActive&&tourPaused){tourPaused=false;speechSynthesis.resume();$('status').textContent='Recorrido en curso.';}else speechSynthesis.resume();};
+$('stop').onclick=()=>{stopTour();$('status').textContent='Recorrido detenido.';};
+$('test').onclick=()=>speak('Si escuchas esta voz, la narración está funcionando correctamente. Ahora puedes recorrer los mapas mentales animados del Grupo 12.');
+makeBranches('ref',ref);makeBranches('met',met);selectNode('ref',0,false);
+window.addEventListener('resize',()=>{['ref','met'].forEach(w=>[...$(w+'Branches').children].forEach((b,i)=>{const pos=[['2%','5%'],['40%','2%'],['75%','7%'],['79%','42%'],['74%','76%'],['40%','80%'],['3%','76%'],['1%','42%']][i];if(innerWidth>760){b.style.left=pos[0];b.style.top=pos[1];}else{b.style.left='';b.style.top='';}}));});
+</script></body></html>
